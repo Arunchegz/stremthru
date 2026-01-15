@@ -196,7 +196,7 @@ func (s *StoreClient) AddMagnet(params *store.AddMagnetParams) (*store.AddMagnet
 	s.listMagnetsCache.Remove(s.getCacheKey(ctx, ""))
 
 	data.Id = res.Data.Task.FileId
-	if task, err := s.waitForTaskComplete(ctx, res.Data.Task.Id, 3, 5*time.Second); task != nil {
+	if task, _ := s.waitForTaskComplete(ctx, res.Data.Task.Id, 3, 5*time.Second); task != nil {
 		// ignore log dependency to avoid build errors
 		if task.Phase == FilePhaseComplete {
 			mRes, err := s.GetMagnet(&store.GetMagnetParams{
